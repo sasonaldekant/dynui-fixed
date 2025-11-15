@@ -58,7 +58,8 @@
     "turbo": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:",
-    "vitest-axe": "catalog:"
+    "vitest-axe": "catalog:",
+    "nx": "22.0.2"
   },
   "packageManager": "pnpm@9.12.0"
 }

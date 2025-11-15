@@ -11,9 +11,9 @@ function sanitizeTokenKey(key: string): string {
   return key
     .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9_-]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
+    .replace(/[^a-z0-9_-]/g, '-') // Replace periods and other invalid chars with dashes
+    .replace(/-+/g, '-')  // Collapse multiple dashes
+    .replace(/^-|-$/g, '') // Remove leading/trailing dashes
 }
 
 function normalizeValue(value: TokenPrimitive | readonly TokenPrimitive[]): string {

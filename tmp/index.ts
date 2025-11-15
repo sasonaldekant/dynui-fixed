@@ -1,5 +1,5 @@
-// DynUI Core Components - Enhanced Barrel Exports
-// All components now include enhanced features while maintaining backward compatibility
+// DynUI Core Components - Barrel Exports
+// Migration from src/components/ to packages/core/src/components/
 
 // Core Components
 export { DynTabs, DynTab, DynTabPanel } from '../ui/dyn-tabs'

@@ -34,6 +34,7 @@ catalog:
   '@storybook/addon-a11y': ^8.3.5
   '@storybook/addon-essentials': ^8.3.5
   '@storybook/addon-docs': ^8.3.5
+  '@storybook/addon-interactions': ^8.3.5
   '@storybook/react-vite': ^8.3.5
   '@storybook/test': ^8.3.5
   '@storybook/test-runner': ^0.23.0

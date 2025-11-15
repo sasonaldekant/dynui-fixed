@@ -1,10 +1,13 @@
-/*
- * DynUI Design Tokens - Complete CSS Custom Properties System
- * This file provides the foundation for consistent styling across all components
+/**
+ * DynUI Design Tokens - CSS Custom Properties
+ * Complete design system with semantic tokens for consistent theming
  */
 
-/* === COLOR SYSTEM === */
 :root {
+  /* ========================================
+   * COLOR SYSTEM
+   * ======================================== */
+  
   /* Base colors */
   --dyn-color-white: #ffffff;
   --dyn-color-black: #000000;
@@ -23,7 +26,7 @@
   --dyn-color-neutral-800: #1f2937;
   --dyn-color-neutral-900: #111827;
 
-  /* Primary brand colors */
+  /* Primary colors */
   --dyn-color-primary-50: #eff6ff;
   --dyn-color-primary-100: #dbeafe;
   --dyn-color-primary-200: #bfdbfe;
@@ -60,102 +63,78 @@
   --dyn-color-info-600: #2563eb;
   --dyn-color-info-700: #1d4ed8;
 
-  /* Semantic aliases */
-  --dyn-color-success: var(--dyn-color-success-500);
-  --dyn-color-warning: var(--dyn-color-warning-500);
-  --dyn-color-danger: var(--dyn-color-danger-500);
-  --dyn-color-error: var(--dyn-color-danger-500);
-  --dyn-color-info: var(--dyn-color-info-500);
-
-  /* Background tokens */
-  --dyn-color-background: var(--dyn-color-white);
-  --dyn-color-background-subtle: var(--dyn-color-neutral-50);
-  --dyn-color-background-muted: var(--dyn-color-neutral-100);
-  --dyn-color-background-hover: var(--dyn-color-neutral-50);
-  --dyn-color-background-selected: var(--dyn-color-primary-50);
-  --dyn-color-background-disabled: var(--dyn-color-neutral-100);
-
-  /* Surface tokens */
-  --dyn-color-surface: var(--dyn-color-white);
-  --dyn-color-surface-elevated: var(--dyn-color-white);
-  --dyn-color-surface-subtle: var(--dyn-color-neutral-50);
-
-  /* Text tokens */
+  /* ========================================
+   * SEMANTIC ALIASES
+   * ======================================== */
+  
+  /* Text colors */
   --dyn-color-text: var(--dyn-color-neutral-900);
   --dyn-color-text-primary: var(--dyn-color-neutral-900);
   --dyn-color-text-secondary: var(--dyn-color-neutral-600);
   --dyn-color-text-tertiary: var(--dyn-color-neutral-500);
-  --dyn-color-text-placeholder: var(--dyn-color-neutral-400);
   --dyn-color-text-disabled: var(--dyn-color-neutral-400);
-  --dyn-color-text-inverse: var(--dyn-color-white);
+  --dyn-color-text-placeholder: var(--dyn-color-neutral-500);
 
-  /* Border tokens */
-  --dyn-color-border: var(--dyn-color-neutral-200);
-  --dyn-color-border-subtle: var(--dyn-color-neutral-100);
-  --dyn-color-border-strong: var(--dyn-color-neutral-300);
-  --dyn-color-border-hover: var(--dyn-color-neutral-300);
-  --dyn-color-border-focus: var(--dyn-color-primary-500);
+  /* Background colors */
+  --dyn-color-background: var(--dyn-color-white);
+  --dyn-color-background-subtle: var(--dyn-color-neutral-50);
+  --dyn-color-background-hover: var(--dyn-color-neutral-100);
+  --dyn-color-background-disabled: var(--dyn-color-neutral-200);
+  --dyn-color-background-selected: var(--dyn-color-primary-50);
+
+  /* Surface colors */
+  --dyn-color-surface: var(--dyn-color-white);
+  --dyn-color-surface-elevated: var(--dyn-color-white);
+
+  /* Border colors */
+  --dyn-color-border: var(--dyn-color-neutral-300);
+  --dyn-color-border-subtle: var(--dyn-color-neutral-200);
+  --dyn-color-border-hover: var(--dyn-color-neutral-400);
   --dyn-color-border-disabled: var(--dyn-color-neutral-200);
+  --dyn-color-border-strong: var(--dyn-color-neutral-600);
+
+  /* Input colors */
+  --dyn-color-input-background: var(--dyn-color-white);
+  --dyn-color-input-text: var(--dyn-color-neutral-900);
+  --dyn-color-input-border: var(--dyn-color-neutral-300);
+  --dyn-color-input-border-focus: var(--dyn-color-primary-600);
 
   /* Focus ring */
-  --dyn-color-focus-ring: rgba(59, 130, 246, 0.35);
+  --dyn-color-focus-ring: var(--dyn-color-primary-600);
 
-  /* Component-specific tokens */
-  --dyn-color-button-primary: var(--dyn-color-primary-600);
-  --dyn-color-button-primary-hover: var(--dyn-color-primary-700);
-  --dyn-color-button-primary-text: var(--dyn-color-white);
-
-  --dyn-color-input-background: var(--dyn-color-white);
-  --dyn-color-input-border: var(--dyn-color-border);
-  --dyn-color-input-border-focus: var(--dyn-color-border-focus);
-  --dyn-color-input-text: var(--dyn-color-text);
-}
-
-/* === SPACING SYSTEM === */
-:root {
-  /* Base spacing scale */
+  /* ========================================
+   * SPACING SYSTEM
+   * ======================================== */
+  
   --dyn-spacing-0: 0;
-  --dyn-spacing-1: 0.25rem;  /* 4px */
-  --dyn-spacing-2: 0.5rem;   /* 8px */
-  --dyn-spacing-3: 0.75rem;  /* 12px */
-  --dyn-spacing-4: 1rem;     /* 16px */
-  --dyn-spacing-5: 1.25rem;  /* 20px */
-  --dyn-spacing-6: 1.5rem;   /* 24px */
-  --dyn-spacing-8: 2rem;     /* 32px */
-  --dyn-spacing-10: 2.5rem;  /* 40px */
-  --dyn-spacing-12: 3rem;    /* 48px */
-  --dyn-spacing-16: 4rem;    /* 64px */
+  --dyn-spacing-1: 0.25rem;   /* 4px */
+  --dyn-spacing-2: 0.5rem;    /* 8px */
+  --dyn-spacing-3: 0.75rem;   /* 12px */
+  --dyn-spacing-4: 1rem;      /* 16px */
+  --dyn-spacing-5: 1.25rem;   /* 20px */
+  --dyn-spacing-6: 1.5rem;    /* 24px */
+  --dyn-spacing-8: 2rem;      /* 32px */
+  --dyn-spacing-10: 2.5rem;   /* 40px */
+  --dyn-spacing-12: 3rem;     /* 48px */
+  --dyn-spacing-16: 4rem;     /* 64px */
 
-  /* Semantic spacing aliases */
-  --dyn-spacing-xs: var(--dyn-spacing-1);
-  --dyn-spacing-sm: var(--dyn-spacing-2);
-  --dyn-spacing-md: var(--dyn-spacing-4);
-  --dyn-spacing-lg: var(--dyn-spacing-6);
-  --dyn-spacing-xl: var(--dyn-spacing-8);
-  --dyn-spacing-2xl: var(--dyn-spacing-10);
-  --dyn-spacing-3xl: var(--dyn-spacing-12);
-
-  /* Component spacing */
-  --dyn-spacing-component-padding-sm: var(--dyn-spacing-2) var(--dyn-spacing-3);
-  --dyn-spacing-component-padding-md: var(--dyn-spacing-3) var(--dyn-spacing-4);
-  --dyn-spacing-component-padding-lg: var(--dyn-spacing-4) var(--dyn-spacing-6);
-}
-
-/* === TYPOGRAPHY SYSTEM === */
-:root {
+  /* ========================================
+   * TYPOGRAPHY SYSTEM
+   * ======================================== */
+  
   /* Font families */
   --dyn-font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --dyn-font-family-mono: 'JetBrains Mono', 'Fira Code', Consolas, 'Liberation Mono', monospace;
 
   /* Font sizes */
-  --dyn-font-size-xs: 0.75rem;   /* 12px */
-  --dyn-font-size-sm: 0.875rem;  /* 14px */
-  --dyn-font-size-base: 1rem;    /* 16px */
-  --dyn-font-size-lg: 1.125rem;  /* 18px */
-  --dyn-font-size-xl: 1.25rem;   /* 20px */
-  --dyn-font-size-2xl: 1.5rem;   /* 24px */
-  --dyn-font-size-3xl: 1.875rem; /* 30px */
-  --dyn-font-size-4xl: 2.25rem;  /* 36px */
+  --dyn-font-size-xs: 0.75rem;    /* 12px */
+  --dyn-font-size-sm: 0.875rem;   /* 14px */
+  --dyn-font-size-base: 1rem;     /* 16px */
+  --dyn-font-size-lg: 1.125rem;   /* 18px */
+  --dyn-font-size-xl: 1.25rem;    /* 20px */
+  --dyn-font-size-2xl: 1.5rem;    /* 24px */
+  --dyn-font-size-3xl: 1.875rem;  /* 30px */
+  --dyn-font-size-4xl: 2.25rem;   /* 36px */
 
   /* Font weights */
   --dyn-font-weight-normal: 400;
@@ -169,10 +148,11 @@
   --dyn-line-height-normal: 1.5;
   --dyn-line-height-relaxed: 1.625;
   --dyn-line-height-loose: 2;
-}
 
-/* === SHADOW SYSTEM === */
-:root {
+  /* ========================================
+   * SHADOW SYSTEM
+   * ======================================== */
+  
   --dyn-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --dyn-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
   --dyn-shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
@@ -181,35 +161,32 @@
   --dyn-shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 
   /* Focus shadow */
-  --dyn-shadow-focus: 0 0 0 3px var(--dyn-color-focus-ring);
-  
-  /* Component shadows */
-  --dyn-shadow-dropdown: var(--dyn-shadow-lg);
-  --dyn-shadow-modal: var(--dyn-shadow-xl);
-  --dyn-shadow-button: var(--dyn-shadow-sm);
-}
+  --dyn-shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.35);
 
-/* === BORDER RADIUS SYSTEM === */
-:root {
-  --dyn-radius-none: 0;
-  --dyn-radius-xs: 0.125rem;  /* 2px */
-  --dyn-radius-sm: 0.25rem;   /* 4px */
-  --dyn-radius-base: 0.375rem; /* 6px */
-  --dyn-radius-md: 0.5rem;    /* 8px */
-  --dyn-radius-lg: 0.75rem;   /* 12px */
-  --dyn-radius-xl: 1rem;      /* 16px */
-  --dyn-radius-2xl: 1.5rem;   /* 24px */
-  --dyn-radius-full: 9999px;
+  /* ========================================
+   * BORDER RADIUS SYSTEM
+   * ======================================== */
   
-  /* Component radius */
+  --dyn-radius-none: 0;
+  --dyn-radius-xs: 0.125rem;   /* 2px */
+  --dyn-radius-sm: 0.25rem;    /* 4px */
+  --dyn-radius-base: 0.375rem; /* 6px */
+  --dyn-radius-md: 0.5rem;     /* 8px */
+  --dyn-radius-lg: 0.75rem;    /* 12px */
+  --dyn-radius-xl: 1rem;       /* 16px */
+  --dyn-radius-2xl: 1.5rem;    /* 24px */
+  --dyn-radius-full: 9999px;
+
+  /* Component-specific radius */
   --dyn-radius-button: var(--dyn-radius-base);
   --dyn-radius-input: var(--dyn-radius-base);
   --dyn-radius-card: var(--dyn-radius-lg);
   --dyn-radius-modal: var(--dyn-radius-xl);
-}
 
-/* === ANIMATION TOKENS === */
-:root {
+  /* ========================================
+   * ANIMATION SYSTEM
+   * ======================================== */
+  
   /* Duration */
   --dyn-duration-instant: 0ms;
   --dyn-duration-fast: 150ms;
@@ -222,20 +199,19 @@
   --dyn-ease-in: cubic-bezier(0.4, 0, 1, 1);
   --dyn-ease-out: cubic-bezier(0, 0, 0.2, 1);
   --dyn-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --dyn-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-  /* Transition tokens */
-  --dyn-transition-colors: color var(--dyn-duration-normal) var(--dyn-ease-out),
-                           background-color var(--dyn-duration-normal) var(--dyn-ease-out),
+  /* Common transitions */
+  --dyn-transition-colors: color var(--dyn-duration-normal) var(--dyn-ease-out), 
+                           background-color var(--dyn-duration-normal) var(--dyn-ease-out), 
                            border-color var(--dyn-duration-normal) var(--dyn-ease-out);
-  --dyn-transition-transform: transform var(--dyn-duration-normal) var(--dyn-ease-out);
-  --dyn-transition-opacity: opacity var(--dyn-duration-normal) var(--dyn-ease-out);
   --dyn-transition-shadow: box-shadow var(--dyn-duration-normal) var(--dyn-ease-out);
+  --dyn-transition-transform: transform var(--dyn-duration-normal) var(--dyn-ease-out);
   --dyn-transition-all: all var(--dyn-duration-normal) var(--dyn-ease-out);
-}
 
-/* === COMPONENT SIZE SYSTEM === */
-:root {
+  /* ========================================
+   * SIZE SYSTEM
+   * ======================================== */
+  
   /* Icon sizes */
   --dyn-size-icon-xs: 12px;
   --dyn-size-icon-sm: 16px;
@@ -243,26 +219,15 @@
   --dyn-size-icon-lg: 32px;
   --dyn-size-icon-xl: 48px;
 
-  /* Component heights */
+  /* Height tokens */
   --dyn-size-height-sm: 32px;
   --dyn-size-height-md: 40px;
   --dyn-size-height-lg: 48px;
 
-  /* Avatar sizes */
-  --dyn-size-avatar-xs: 24px;
-  --dyn-size-avatar-sm: 32px;
-  --dyn-size-avatar-md: 40px;
-  --dyn-size-avatar-lg: 48px;
-  --dyn-size-avatar-xl: 64px;
-
-  /* Button sizes */
-  --dyn-size-button-height-sm: var(--dyn-size-height-sm);
-  --dyn-size-button-height-md: var(--dyn-size-height-md);
-  --dyn-size-button-height-lg: var(--dyn-size-height-lg);
-}
-
-/* === Z-INDEX SYSTEM === */
-:root {
+  /* ========================================
+   * Z-INDEX SYSTEM
+   * ======================================== */
+  
   --dyn-z-dropdown: 1000;
   --dyn-z-sticky: 1020;
   --dyn-z-fixed: 1030;
@@ -273,70 +238,276 @@
   --dyn-z-toast: 1080;
 }
 
-/* === DARK MODE TOKENS === */
+/* ========================================
+ * DARK MODE SUPPORT
+ * ======================================== */
+
 @media (prefers-color-scheme: dark) {
   :root {
+    --dyn-color-text: var(--dyn-color-neutral-50);
+    --dyn-color-text-primary: var(--dyn-color-neutral-50);
+    --dyn-color-text-secondary: var(--dyn-color-neutral-400);
+    --dyn-color-text-tertiary: var(--dyn-color-neutral-500);
+    --dyn-color-text-disabled: var(--dyn-color-neutral-600);
+    --dyn-color-text-placeholder: var(--dyn-color-neutral-500);
+
     --dyn-color-background: var(--dyn-color-neutral-900);
     --dyn-color-background-subtle: var(--dyn-color-neutral-800);
-    --dyn-color-background-muted: var(--dyn-color-neutral-700);
-    --dyn-color-background-hover: var(--dyn-color-neutral-800);
-    --dyn-color-background-selected: rgba(59, 130, 246, 0.2);
-    
+    --dyn-color-background-hover: var(--dyn-color-neutral-700);
+    --dyn-color-background-disabled: var(--dyn-color-neutral-800);
+    --dyn-color-background-selected: var(--dyn-color-primary-900);
+
     --dyn-color-surface: var(--dyn-color-neutral-800);
-    --dyn-color-surface-elevated: var(--dyn-color-neutral-700);
-    --dyn-color-surface-subtle: var(--dyn-color-neutral-700);
-    
-    --dyn-color-text: var(--dyn-color-neutral-100);
-    --dyn-color-text-primary: var(--dyn-color-neutral-100);
-    --dyn-color-text-secondary: var(--dyn-color-neutral-300);
-    --dyn-color-text-tertiary: var(--dyn-color-neutral-400);
-    
+    --dyn-color-surface-elevated: var(--dyn-color-neutral-800);
+
     --dyn-color-border: var(--dyn-color-neutral-700);
     --dyn-color-border-subtle: var(--dyn-color-neutral-800);
-    --dyn-color-border-strong: var(--dyn-color-neutral-600);
+    --dyn-color-border-hover: var(--dyn-color-neutral-600);
+    --dyn-color-border-disabled: var(--dyn-color-neutral-800);
+    --dyn-color-border-strong: var(--dyn-color-neutral-400);
+
+    --dyn-color-input-background: var(--dyn-color-neutral-800);
+    --dyn-color-input-text: var(--dyn-color-neutral-50);
+    --dyn-color-input-border: var(--dyn-color-neutral-600);
+    --dyn-color-input-border-focus: var(--dyn-color-primary-500);
+
+    --dyn-shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.5);
   }
 }
 
-/* === FORCED DARK MODE === */
-[data-theme="dark"] {
-  --dyn-color-background: var(--dyn-color-neutral-900);
-  --dyn-color-background-subtle: var(--dyn-color-neutral-800);
-  --dyn-color-background-muted: var(--dyn-color-neutral-700);
-  --dyn-color-background-hover: var(--dyn-color-neutral-800);
-  --dyn-color-background-selected: rgba(59, 130, 246, 0.2);
-  
-  --dyn-color-surface: var(--dyn-color-neutral-800);
-  --dyn-color-surface-elevated: var(--dyn-color-neutral-700);
-  --dyn-color-surface-subtle: var(--dyn-color-neutral-700);
-  
-  --dyn-color-text: var(--dyn-color-neutral-100);
-  --dyn-color-text-primary: var(--dyn-color-neutral-100);
-  --dyn-color-text-secondary: var(--dyn-color-neutral-300);
-  --dyn-color-text-tertiary: var(--dyn-color-neutral-400);
-  
-  --dyn-color-border: var(--dyn-color-neutral-700);
-  --dyn-color-border-subtle: var(--dyn-color-neutral-800);
-  --dyn-color-border-strong: var(--dyn-color-neutral-600);
+/* ========================================
+ * COMPONENT STYLES
+ * ======================================== */
+
+/* DynInput Enhanced Styles */
+.dyn-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--dyn-color-input-background);
+  border: 1px solid var(--dyn-color-input-border);
+  border-radius: var(--dyn-radius-input);
+  transition: var(--dyn-transition-colors), var(--dyn-transition-shadow);
 }
 
-/* === FORCED LIGHT MODE === */
-[data-theme="light"] {
-  --dyn-color-background: var(--dyn-color-white);
-  --dyn-color-background-subtle: var(--dyn-color-neutral-50);
-  --dyn-color-background-muted: var(--dyn-color-neutral-100);
-  --dyn-color-background-hover: var(--dyn-color-neutral-50);
-  --dyn-color-background-selected: var(--dyn-color-primary-50);
-  
-  --dyn-color-surface: var(--dyn-color-white);
-  --dyn-color-surface-elevated: var(--dyn-color-white);
-  --dyn-color-surface-subtle: var(--dyn-color-neutral-50);
-  
-  --dyn-color-text: var(--dyn-color-neutral-900);
-  --dyn-color-text-primary: var(--dyn-color-neutral-900);
-  --dyn-color-text-secondary: var(--dyn-color-neutral-600);
-  --dyn-color-text-tertiary: var(--dyn-color-neutral-500);
-  
-  --dyn-color-border: var(--dyn-color-neutral-200);
-  --dyn-color-border-subtle: var(--dyn-color-neutral-100);
-  --dyn-color-border-strong: var(--dyn-color-neutral-300);
+.dyn-input-container--sm {
+  min-height: var(--dyn-size-height-sm);
+  font-size: var(--dyn-font-size-sm);
+}
+
+.dyn-input-container--md {
+  min-height: var(--dyn-size-height-md);
+  font-size: var(--dyn-font-size-base);
+}
+
+.dyn-input-container--lg {
+  min-height: var(--dyn-size-height-lg);
+  font-size: var(--dyn-font-size-lg);
+}
+
+.dyn-input-container--focused {
+  border-color: var(--dyn-color-input-border-focus);
+  box-shadow: var(--dyn-shadow-focus);
+}
+
+.dyn-input-container--error {
+  border-color: var(--dyn-color-danger-500);
+}
+
+.dyn-input-container--error.dyn-input-container--focused {
+  border-color: var(--dyn-color-danger-600);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.dyn-input-container--warning {
+  border-color: var(--dyn-color-warning-500);
+}
+
+.dyn-input-container--success {
+  border-color: var(--dyn-color-success-500);
+}
+
+.dyn-input-container--disabled {
+  background-color: var(--dyn-color-background-disabled);
+  border-color: var(--dyn-color-border-disabled);
+  cursor: not-allowed;
+}
+
+.dyn-input-container--readonly {
+  background-color: var(--dyn-color-background-subtle);
+  cursor: default;
+}
+
+.dyn-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  color: var(--dyn-color-text);
+  font-family: inherit;
+  font-size: inherit;
+  padding: var(--dyn-spacing-2) var(--dyn-spacing-3);
+}
+
+.dyn-input::placeholder {
+  color: var(--dyn-color-text-placeholder);
+}
+
+.dyn-input:disabled {
+  color: var(--dyn-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.dyn-input__prefix,
+.dyn-input__suffix {
+  display: flex;
+  align-items: center;
+  gap: var(--dyn-spacing-2);
+  padding: 0 var(--dyn-spacing-2);
+  color: var(--dyn-color-text-secondary);
+}
+
+.dyn-input__clean-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--dyn-color-text-tertiary);
+  cursor: pointer;
+  border-radius: var(--dyn-radius-sm);
+  transition: var(--dyn-transition-colors);
+}
+
+.dyn-input__clean-button:hover {
+  color: var(--dyn-color-text-secondary);
+  background-color: var(--dyn-color-background-hover);
+}
+
+.dyn-input__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dyn-size-icon-sm);
+  height: var(--dyn-size-icon-sm);
+  color: var(--dyn-color-primary-600);
+}
+
+.dyn-input__loading-spinner {
+  width: 16px;
+  height: 16px;
+  animation: dyn-spin 1s linear infinite;
+}
+
+@keyframes dyn-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* DynCheckbox Enhanced Styles */
+.dyn-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--dyn-spacing-2);
+  cursor: pointer;
+  font-family: var(--dyn-font-family-sans);
+  user-select: none;
+}
+
+.dyn-checkbox--disabled,
+.dyn-checkbox--loading {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.dyn-checkbox--readonly {
+  cursor: default;
+}
+
+.dyn-checkbox__input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dyn-checkbox__input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: inherit;
+  z-index: 1;
+}
+
+.dyn-checkbox__input:focus + .dyn-checkbox__box {
+  box-shadow: var(--dyn-shadow-focus);
+}
+
+.dyn-checkbox__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--dyn-color-border);
+  border-radius: var(--dyn-radius-sm);
+  background-color: var(--dyn-color-background);
+  color: var(--dyn-color-white);
+  transition: var(--dyn-transition-all);
+  flex-shrink: 0;
+}
+
+.dyn-checkbox__box--sm {
+  width: 16px;
+  height: 16px;
+}
+
+.dyn-checkbox__box--lg {
+  width: 24px;
+  height: 24px;
+}
+
+.dyn-checkbox__box--checked {
+  background-color: var(--dyn-color-primary-600);
+  border-color: var(--dyn-color-primary-600);
+}
+
+.dyn-checkbox__box--indeterminate {
+  background-color: var(--dyn-color-primary-600);
+  border-color: var(--dyn-color-primary-600);
+}
+
+.dyn-checkbox__box svg {
+  width: 12px;
+  height: 12px;
+}
+
+.dyn-checkbox__box--sm svg {
+  width: 10px;
+  height: 10px;
+}
+
+.dyn-checkbox__box--lg svg {
+  width: 14px;
+  height: 14px;
+}
+
+.dyn-checkbox__label {
+  color: var(--dyn-color-text-primary);
+  line-height: var(--dyn-line-height-normal);
+}
+
+.dyn-checkbox--disabled .dyn-checkbox__label {
+  color: var(--dyn-color-text-disabled);
+}
+
+.dyn-checkbox__required-indicator {
+  color: var(--dyn-color-danger-600);
+  margin-left: var(--dyn-spacing-1);
+  font-weight: var(--dyn-font-weight-bold);
 }

@@ -1,0 +1,88 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "{projectRoot}/src/**/*.ts",
+        "{projectRoot}/src/**/*.tsx",
+        "{projectRoot}/package.json",
+        "{projectRoot}/tsconfig*.json"
+      ],
+      "outputs": [
+        "{projectRoot}/dist/**",
+        "{projectRoot}/build/**",
+        "{projectRoot}/storybook-static/**"
+      ],
+      "cache": true
+    },
+    "test": {
+      "dependsOn": [
+        "build"
+      ],
+      "inputs": [
+        "{projectRoot}/src/**/*.ts",
+        "{projectRoot}/src/**/*.tsx",
+        "{projectRoot}/tests/**/*.ts",
+        "{projectRoot}/tests/**/*.tsx"
+      ],
+      "outputs": [
+        "{projectRoot}/coverage/**"
+      ],
+      "cache": true
+    },
+    "lint": {
+      "inputs": [
+        "{projectRoot}/src/**/*.ts",
+        "{projectRoot}/src/**/*.tsx",
+        "{projectRoot}/*.json",
+        "{projectRoot}/*.js",
+        "{projectRoot}/*.ts"
+      ],
+      "cache": true
+    },
+    "typecheck": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "{projectRoot}/src/**/*.ts",
+        "{projectRoot}/src/**/*.tsx",
+        "{projectRoot}/tsconfig*.json"
+      ],
+      "cache": true
+    },
+    "dev": {
+      "cache": false
+    },
+    "test:a11y": {
+      "dependsOn": [
+        "build"
+      ],
+      "inputs": [
+        "{projectRoot}/src/**/*.ts",
+        "{projectRoot}/src/**/*.tsx",
+        "{projectRoot}/tests/**/*.ts",
+        "{projectRoot}/tests/**/*.tsx"
+      ],
+      "cache": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "storybook": {
+      "cache": false
+    },
+    "build:storybook": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/storybook-static/**"
+      ],
+      "cache": true
+    }
+  }
+}

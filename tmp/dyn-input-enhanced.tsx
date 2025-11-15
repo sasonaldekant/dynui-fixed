@@ -1,27 +1,29 @@
 import React, { useState, useRef, useCallback, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { cn } from '../utils/classNames'
-import type { Size } from '../types/common.types'
+import type { Size, Color } from '../types/common.types'
 import { DynFieldContainer } from './dyn-field-container'
+import { DynIcon, CloseIcon } from './dyn-icon'
 
 // Validation types
 interface ValidationRule {
-  type: 'required' | 'email' | 'phone' | 'url' | 'min' | 'max' | 'pattern' | 'custom' | 'async'
+  type: 'required' | 'email' | 'phone' | 'url' | 'min' | 'max' | 'pattern' | 'custom'
   message: string
   value?: any
   pattern?: RegExp
   customValidator?: (value: string) => boolean
-  asyncValidator?: (value: string) => Promise<boolean>
 }
 
 // Masking types
+type MaskPattern = string | ((value: string) => string)
+
 interface MaskOptions {
-  pattern: string
+  pattern: MaskPattern
   placeholder?: string
   showMask?: boolean
 }
 
-// Enhanced DynInput props (backward compatible + new features)
-interface DynInputProps {
+// Enhanced DynInput props
+interface DynInputEnhancedProps {
   /** Input type */
   type?: 'text' | 'email' | 'password' | 'tel' | 'url' | 'number' | 'search'
   /** Input value (controlled) */
@@ -47,7 +49,6 @@ interface DynInputProps {
   /** Custom className */
   className?: string
   
-  // ENHANCED FEATURES (new additions)
   /** Label for field container */
   label?: string
   /** Description text */
@@ -59,18 +60,18 @@ interface DynInputProps {
   /** Success message */
   success?: string
   
-  /** Validation rules (ENHANCED) */
+  /** Validation rules */
   validation?: ValidationRule[]
-  /** Validate on change (ENHANCED) */
+  /** Validate on change */
   validateOnChange?: boolean
-  /** Validate on blur (ENHANCED) */
+  /** Validate on blur */
   validateOnBlur?: boolean
   
-  /** Input masking (ENHANCED) */
+  /** Input masking */
   mask?: string | MaskOptions
-  /** Show clear/clean button (ENHANCED) */
+  /** Show clear/clean button */
   showCleanButton?: boolean
-  /** Loading state (ENHANCED) */
+  /** Loading state */
   loading?: boolean
   
   /** Start icon */
@@ -88,7 +89,7 @@ interface DynInputProps {
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
   /** Focus handler */
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void
-  /** Clean button handler (ENHANCED) */
+  /** Clean button handler */
   onClean?: () => void
   
   /** ARIA attributes */
@@ -100,7 +101,7 @@ interface DynInputProps {
 }
 
 // Input reference methods
-interface DynInputRef {
+interface DynInputEnhancedRef {
   focus: () => void
   blur: () => void
   clear: () => void
@@ -135,6 +136,7 @@ function applyMask(value: string, mask: string): string {
     const inputChar = value[valueIndex]
     
     if (maskChar === '9') {
+      // Digit placeholder
       if (/\d/.test(inputChar)) {
         maskedValue += inputChar
         valueIndex++
@@ -142,6 +144,7 @@ function applyMask(value: string, mask: string): string {
         break
       }
     } else if (maskChar === 'A') {
+      // Letter placeholder
       if (/[A-Za-z]/.test(inputChar)) {
         maskedValue += inputChar.toUpperCase()
         valueIndex++
@@ -149,9 +152,11 @@ function applyMask(value: string, mask: string): string {
         break
       }
     } else if (maskChar === '*') {
+      // Any character placeholder
       maskedValue += inputChar
       valueIndex++
     } else {
+      // Literal character
       maskedValue += maskChar
     }
   }
@@ -165,7 +170,7 @@ function removeMask(value: string, mask: string): string {
   return value.split('').filter(char => !maskChars.has(char)).join('')
 }
 
-export const DynInput = forwardRef<DynInputRef, DynInputProps>(
+export const DynInputEnhanced = forwardRef<DynInputEnhancedRef, DynInputEnhancedProps>(
   ({
     type = 'text',
     value,
@@ -180,15 +185,16 @@ export const DynInput = forwardRef<DynInputRef, DynInputProps>(
     variant = 'outline',
     className,
     
-    // Enhanced features
     label,
     description,
     error,
     warning,
     success,
+    
     validation = [],
     validateOnChange = true,
     validateOnBlur = true,
+    
     mask,
     showCleanButton = false,
     loading = false,
@@ -214,17 +220,12 @@ export const DynInput = forwardRef<DynInputRef, DynInputProps>(
     const [isFocused, setIsFocused] = useState(false)
     const [hasInteracted, setHasInteracted] = useState(false)
     
-    // Enhanced features are only active if validation/mask/etc props are provided
-    const hasEnhancedFeatures = validation.length > 0 || mask || showCleanButton || loading
-    
     // Mask configuration
     const maskConfig = typeof mask === 'string' ? { pattern: mask } : mask
     const maskPattern = maskConfig?.pattern
     
-    // Validation logic (only if validation rules provided)
+    // Validation logic
     const validateInput = useCallback((inputValue: string): string[] => {
-      if (!hasEnhancedFeatures || validation.length === 0) return []
-      
       const errors: string[] = []
       
       for (const rule of validation) {
@@ -255,9 +256,6 @@ export const DynInput = forwardRef<DynInputRef, DynInputProps>(
           case 'custom':
             isValid = !inputValue || !rule.customValidator || rule.customValidator(inputValue)
             break
-          case 'async':
-            // Async validation handled separately
-            break
         }
         
         if (!isValid) {
@@ -266,7 +264,7 @@ export const DynInput = forwardRef<DynInputRef, DynInputProps>(
       }
       
       return errors
-    }, [validation, hasEnhancedFeatures])
+    }, [validation])
     
     // Handle input change
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -278,39 +276,33 @@ export const DynInput = forwardRef<DynInputRef, DynInputProps>(
       }
       
       setInputValue(newValue)
+      setHasInteracted(true)
       
-      // Enhanced validation (only if enabled)
-      if (hasEnhancedFeatures) {
-        setHasInteracted(true)
-        
-        if (validateOnChange && hasInteracted) {
-          const errors = validateInput(newValue)
-          setValidationErrors(errors)
-        }
+      // Real-time validation
+      if (validateOnChange && hasInteracted) {
+        const errors = validateInput(newValue)
+        setValidationErrors(errors)
       }
       
-      // Notify parent
+      // Notify parent with unmasked value if needed
       const outputValue = maskPattern && typeof maskPattern === 'string' 
         ? removeMask(newValue, maskPattern)
         : newValue
       onChange?.(outputValue)
-    }, [maskPattern, validateOnChange, hasInteracted, validateInput, onChange, hasEnhancedFeatures])
+    }, [maskPattern, validateOnChange, hasInteracted, validateInput, onChange])
     
     // Handle blur
     const handleBlur = useCallback((event: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(false)
+      setHasInteracted(true)
       
-      if (hasEnhancedFeatures) {
-        setHasInteracted(true)
-        
-        if (validateOnBlur) {
-          const errors = validateInput(inputValue)
-          setValidationErrors(errors)
-        }
+      if (validateOnBlur) {
+        const errors = validateInput(inputValue)
+        setValidationErrors(errors)
       }
       
       onBlur?.(event)
-    }, [validateOnBlur, validateInput, inputValue, onBlur, hasEnhancedFeatures])
+    }, [validateOnBlur, validateInput, inputValue, onBlur])
     
     // Handle focus
     const handleFocus = useCallback((event: React.FocusEvent<HTMLInputElement>) => {
@@ -321,13 +313,11 @@ export const DynInput = forwardRef<DynInputRef, DynInputProps>(
     // Handle clean button
     const handleClean = useCallback(() => {
       setInputValue('')
-      if (hasEnhancedFeatures) {
-        setValidationErrors([])
-      }
+      setValidationErrors([])
       onChange?.('')
       onClean?.()
       inputRef.current?.focus()
-    }, [onChange, onClean, hasEnhancedFeatures])
+    }, [onChange, onClean])
     
     // Sync controlled value
     useEffect(() => {
@@ -347,13 +337,12 @@ export const DynInput = forwardRef<DynInputRef, DynInputProps>(
         onChange?.(newValue)
       },
       validate: () => {
-        if (!hasEnhancedFeatures) return true
         const errors = validateInput(inputValue)
         setValidationErrors(errors)
         return errors.length === 0
       },
       getElement: () => inputRef.current,
-    }), [inputValue, validateInput, handleClean, onChange, hasEnhancedFeatures])
+    }), [inputValue, validateInput, handleClean, onChange])
     
     // Determine validation state
     const hasError = Boolean(error || validationErrors.length > 0)
@@ -362,143 +351,141 @@ export const DynInput = forwardRef<DynInputRef, DynInputProps>(
     
     const currentError = error || validationErrors[0]
     
-    // If enhanced features are used, wrap in DynFieldContainer
-    if (hasEnhancedFeatures || label || description || hasError || hasWarning || hasSuccess) {
-      return (
-        <DynFieldContainer
-          label={label}
-          description={description}
-          error={currentError}
-          warning={warning}
-          success={success}
-          required={required}
-          disabled={disabled}
-          size={size}
-          className={className}
-        >
-          <div className={cn(
-            'dyn-input-container',
-            `dyn-input-container--${size}`,
-            `dyn-input-container--${variant}`,
-            isFocused && 'dyn-input-container--focused',
-            hasError && 'dyn-input-container--error',
-            hasWarning && 'dyn-input-container--warning', 
-            hasSuccess && 'dyn-input-container--success',
-            loading && 'dyn-input-container--loading',
-            disabled && 'dyn-input-container--disabled',
-            readonly && 'dyn-input-container--readonly'
-          )}>
-            {/* Prefix section */}
-            {(startIcon || prefix) && (
-              <div className="dyn-input__prefix">
-                {startIcon && <span className="dyn-input__start-icon">{startIcon}</span>}
-                {prefix && <span className="dyn-input__prefix-content">{prefix}</span>}
-              </div>
-            )}
-            
-            {/* Input element */}
-            <input
-              ref={inputRef}
-              type={type}
-              id={id}
-              name={name}
-              value={inputValue}
-              placeholder={placeholder}
-              disabled={disabled}
-              required={required}
-              readOnly={readonly}
-              className={cn('dyn-input', `dyn-input--${size}`, `dyn-input--${variant}`)}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
-              aria-label={ariaLabel}
-              aria-labelledby={ariaLabelledby}
-              aria-describedby={ariaDescribedby}
-              data-testid={dataTestId}
-            />
-            
-            {/* Suffix section */}
-            {(endIcon || suffix || (showCleanButton && inputValue) || loading) && (
-              <div className="dyn-input__suffix">
-                {loading && (
-                  <div className="dyn-input__loading">
-                    <svg className="dyn-input__loading-spinner" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path fill="currentColor" d="m12 2a10 10 0 0 1 10 10h-4a6 6 0 0 0-6-6v-4z" />
-                    </svg>
-                  </div>
-                )}
-                
-                {showCleanButton && inputValue && !readonly && !disabled && (
-                  <button
-                    type="button"
-                    className="dyn-input__clean-button"
-                    onClick={handleClean}
-                    aria-label="Clear field"
-                  >
-                    ✕
-                  </button>
-                )}
-                
-                {suffix && <span className="dyn-input__suffix-content">{suffix}</span>}
-                {endIcon && <span className="dyn-input__end-icon">{endIcon}</span>}
-              </div>
-            )}
-          </div>
-        </DynFieldContainer>
-      )
-    }
+    // Build input container classes
+    const containerClasses = cn(
+      'dyn-input-container',
+      `dyn-input-container--${size}`,
+      `dyn-input-container--${variant}`,
+      isFocused && 'dyn-input-container--focused',
+      hasError && 'dyn-input-container--error',
+      hasWarning && 'dyn-input-container--warning', 
+      hasSuccess && 'dyn-input-container--success',
+      loading && 'dyn-input-container--loading',
+      disabled && 'dyn-input-container--disabled',
+      readonly && 'dyn-input-container--readonly',
+      (startIcon || prefix) && 'dyn-input-container--has-prefix',
+      (endIcon || suffix || showCleanButton || loading) && 'dyn-input-container--has-suffix',
+      className
+    )
     
-    // Basic mode (backward compatibility) - just the input without container
+    // Build input classes
+    const inputClasses = cn(
+      'dyn-input',
+      `dyn-input--${size}`,
+      `dyn-input--${variant}`
+    )
+    
+    const showCleanAction = showCleanButton && inputValue && !readonly && !disabled
+    
     return (
-      <div className={cn(
-        'dyn-input-container',
-        `dyn-input-container--${size}`,
-        `dyn-input-container--${variant}`,
-        disabled && 'dyn-input-container--disabled',
-        readonly && 'dyn-input-container--readonly',
-        className
-      )}>
-        {(startIcon || prefix) && (
-          <div className="dyn-input__prefix">
-            {startIcon && <span className="dyn-input__start-icon">{startIcon}</span>}
-            {prefix && <span className="dyn-input__prefix-content">{prefix}</span>}
-          </div>
-        )}
-        
-        <input
-          ref={inputRef}
-          type={type}
-          id={id}
-          name={name}
-          value={inputValue}
-          placeholder={placeholder}
-          disabled={disabled}
-          required={required}
-          readOnly={readonly}
-          className={cn('dyn-input', `dyn-input--${size}`, `dyn-input--${variant}`)}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          aria-label={ariaLabel}
-          aria-labelledby={ariaLabelledby}
-          aria-describedby={ariaDescribedby}
-          data-testid={dataTestId}
-        />
-        
-        {(endIcon || suffix) && (
-          <div className="dyn-input__suffix">
-            {suffix && <span className="dyn-input__suffix-content">{suffix}</span>}
-            {endIcon && <span className="dyn-input__end-icon">{endIcon}</span>}
-          </div>
-        )}
-      </div>
+      <DynFieldContainer
+        label={label}
+        description={description}
+        error={currentError}
+        warning={warning}
+        success={success}
+        required={required}
+        disabled={disabled}
+        size={size}
+      >
+        <div className={containerClasses}>
+          {/* Prefix section */}
+          {(startIcon || prefix) && (
+            <div className="dyn-input__prefix">
+              {startIcon && (
+                <span className="dyn-input__start-icon" aria-hidden="true">
+                  {startIcon}
+                </span>
+              )}
+              {prefix && (
+                <span className="dyn-input__prefix-content">
+                  {prefix}
+                </span>
+              )}
+            </div>
+          )}
+          
+          {/* Input element */}
+          <input
+            ref={inputRef}
+            type={type}
+            id={id}
+            name={name}
+            value={inputValue}
+            placeholder={placeholder}
+            disabled={disabled}
+            required={required}
+            readOnly={readonly}
+            className={inputClasses}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledby}
+            aria-describedby={ariaDescribedby}
+            data-testid={dataTestId}
+          />
+          
+          {/* Suffix section */}
+          {(endIcon || suffix || showCleanAction || loading) && (
+            <div className="dyn-input__suffix">
+              {loading && (
+                <div className="dyn-input__loading" aria-hidden="true">
+                  <svg
+                    className="dyn-input__loading-spinner"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <circle
+                      className="dyn-input__loading-circle"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="dyn-input__loading-path"
+                      fill="currentColor"
+                      d="m12 2a10 10 0 0 1 10 10h-4a6 6 0 0 0-6-6v-4z"
+                    />
+                  </svg>
+                </div>
+              )}
+              
+              {showCleanAction && (
+                <button
+                  type="button"
+                  className="dyn-input__clean-button"
+                  onClick={handleClean}
+                  aria-label="Clear field"
+                  tabIndex={-1}
+                >
+                  <CloseIcon />
+                </button>
+              )}
+              
+              {suffix && (
+                <span className="dyn-input__suffix-content">
+                  {suffix}
+                </span>
+              )}
+              
+              {endIcon && (
+                <span className="dyn-input__end-icon" aria-hidden="true">
+                  {endIcon}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+      </DynFieldContainer>
     )
   }
 )
 
-DynInput.displayName = 'DynInput'
+DynInputEnhanced.displayName = 'DynInputEnhanced'
 
 // Export types
-export type { DynInputProps, DynInputRef, ValidationRule, MaskOptions }
-export default DynInput
+export type { DynInputEnhancedProps, DynInputEnhancedRef, ValidationRule, MaskOptions }
+export default DynInputEnhanced
